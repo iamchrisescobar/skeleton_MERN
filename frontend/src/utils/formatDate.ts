@@ -6,6 +6,5 @@ export function formatDate(dateString: string): string {
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
-        }
-    )
+        });
 }
