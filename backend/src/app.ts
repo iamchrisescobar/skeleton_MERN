@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import notesRoutes from "./routes/notes.ts";
+import userRoutes from "./routes/users.ts";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 
@@ -16,6 +17,7 @@ app.get("/favicon.ico", (req, res) => {
     res.status(204).end(); // No Content - browser will use default favicon
 });
 
+app.use("/api/users", userRoutes)
 app.use("/api/notes", notesRoutes);
 
 // Middleware for unreachable endpoints
