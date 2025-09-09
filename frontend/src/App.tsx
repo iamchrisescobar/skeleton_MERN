@@ -9,6 +9,7 @@ import AddEditNotesDialog from "./components/AddEditNotesDialog";
 import { FaPlus } from "react-icons/fa";
 import SignUpModal from "./components/SignUpModal";
 import LoginModal from "./components/LogInModal";
+import NavBar from "./components/NavBar";
 
 function App() {
     // STATE MANAGEMENT
@@ -99,6 +100,13 @@ function App() {
     // MAIN RENDER
     // --------------------------------------------------------------------------
     return (
+        <div>
+            <NavBar 
+            loggedInUser={null}
+            onLoginClicked={() => { }}
+            onSignUpClicked={() => { }}
+            onLogoutSuccessfull={() => { }}
+            />
         <Container className={styles.notesPage}>
             {/* ADD NOTE BUTTON */}
             <Button
@@ -171,6 +179,7 @@ function App() {
             />
             }
         </Container>
+        </div>
     );
 }
 
