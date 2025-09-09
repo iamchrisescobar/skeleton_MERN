@@ -15,6 +15,11 @@
     // "types": ["node"],
     // and npm install -D @types/node
 
+    "typeRoots": [
+      "node_modules/@types",
+      "@types"
+    ],
+
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
@@ -42,5 +47,8 @@
     "skipLibCheck": true,
 
     "allowImportingTsExtensions": true,
+  },
+  "ts-node": {
+    "files": true
   }
 }
