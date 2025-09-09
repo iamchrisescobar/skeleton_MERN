@@ -1,9 +1,10 @@
 import express from "express";
 import * as UserController from "../controllers/users.ts";
+import { requiresAuth } from "../middleware/auth.ts";
 
 const router = express.Router();
 
-router.get("/", UserController.getAuthenticatedUser);
+router.get("/", requiresAuth, UserController.getAuthenticatedUser);
 
 router.post("/logout", UserController.logout);
 
