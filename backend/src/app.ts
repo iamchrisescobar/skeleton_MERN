@@ -2,8 +2,12 @@ import "dotenv/config";
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import notesRoutes from "./routes/notes.ts";
+import userRoutes from "./routes/users.ts";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import session from "express-session";
+import env from "./util/validateEnv.ts";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -16,6 +20,20 @@ app.get("/favicon.ico", (req, res) => {
     res.status(204).end(); // No Content - browser will use default favicon
 });
 
+app.use(session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 // 1 ms * 1000 * 60 s * 60 m = 1 h
+    },
+    rolling: true,
+    store: MongoStore.create({
+        mongoUrl: env.MONGO_CONNECTION_STRING
+    }),
+}));
+
+app.use("/api/users", userRoutes)
 app.use("/api/notes", notesRoutes);
 
 // Middleware for unreachable endpoints
