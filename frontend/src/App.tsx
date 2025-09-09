@@ -7,6 +7,8 @@ import styleUtils from "./styles/utils.module.css";
 import * as NotesAPI from "./network/notes_api";
 import AddEditNotesDialog from "./components/AddEditNotesDialog";
 import { FaPlus } from "react-icons/fa";
+import SignUpModal from "./components/SignUpModal";
+import LoginModal from "./components/LogInModal";
 
 function App() {
     // STATE MANAGEMENT
@@ -156,6 +158,18 @@ function App() {
                     }}
                 />
             )}
+            { false &&
+            <SignUpModal 
+            onDismiss={() => { }}
+            onSignUpSuccesful={() => { }}
+            />
+            }
+            { false &&
+            <LoginModal 
+            onDismiss={() => { }}
+            onLoginSuccesful={() => { }}
+            />
+            }
         </Container>
     );
 }
