@@ -5,7 +5,7 @@ import Note from './components/Note';
 import styles from "./styles/NotesPage.module.css";
 import styleUtils from "./styles/utils.module.css";
 import * as NotesAPI from "./network/notes_api";
-import AddNotesDialog from './components/AddNotesDialog';
+import AddEditNotesDialog from './components/AddEditNotesDialog';
 import { FaPlus } from "react-icons/fa";
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
 
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
 
+  const [noteToEdit, setNoteToEdit] = useState<NoteModel|null>(null);
 
   useEffect(() => {
     async function loadNotes() {
@@ -49,16 +50,17 @@ function App() {
         {notes.map(note => (
           <Col key={note._id}>
             <Note 
-            note={note}
-            onDeleteNoteClick={deleteNote}
-            className={styles.note} 
+              note={note}
+              onNoteClicked={setNoteToEdit}
+              onDeleteNoteClick={deleteNote}
+              className={styles.note} 
             />
           </Col>
           
         ))}
       </Row>
       { showAddNoteDialog &&
-        <AddNotesDialog 
+        <AddEditNotesDialog 
           onDismiss={() => setShowAddNoteDialog(false)}
           onNoteSaved={(newNote) => {
             setNotes([...notes, newNote]);
@@ -67,6 +69,16 @@ function App() {
           }}
         />
 
+      }
+      { noteToEdit &&
+        <AddEditNotesDialog
+        noteToEdit={noteToEdit} 
+        onDismiss={() => setNoteToEdit(null)}
+        onNoteSaved={(updatedNote) => {
+          setNotes(notes.map(existingNote => existingNote._id === updatedNote._id ? updatedNote : existingNote));
+          setNoteToEdit(null);
+        }}
+        />
       }
     </Container>
   );
