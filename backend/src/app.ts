@@ -8,6 +8,7 @@ import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
 import env from "./util/validateEnv.ts";
 import MongoStore from "connect-mongo";
+import { requiresAuth } from "./middleware/auth.ts";
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.use(session({
 }));
 
 app.use("/api/users", userRoutes)
-app.use("/api/notes", notesRoutes);
+app.use("/api/notes", requiresAuth, notesRoutes);
 
 // Middleware for unreachable endpoints
 app.use((req, res, next) => {
