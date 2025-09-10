@@ -37,7 +37,7 @@ export const signUp: RequestHandler<unknown, unknown, SingUpBody, unknown> = asy
         const existingEmail = await UserModel.findOne({ email: email }).exec();
 
         if (existingEmail) {
-            throw createHttpError(409, "An account associated with the email address already exists. Please log in instead.");
+            throw createHttpError(409, "An account associated with this email address already exists. Please log in instead.");
         }
 
         const passwordHashed = await bcrypt.hash(passwordRaw, 10);
